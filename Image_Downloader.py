@@ -1,4 +1,5 @@
 import datetime
+from urllib.request import urlretrieve
 
 #Sets beginning of observing run
 start = datetime.date(2019,4,1)
@@ -22,8 +23,8 @@ str4 = "-86400.png"
 #Allows for start date to be updated by one day at a time
 oneDay = datetime.timedelta(days = 1)
 
-#Creates URL file
-URLs = open("URLs.txt", "w")
+#Counts what day the file corresponds to
+dayCount = 1
 
 #Creates and writes all URLs
 for x in range(daysIncludingStart):
@@ -37,12 +38,10 @@ for x in range(daysIncludingStart):
 	out = str1 + str2 + year + month + day
 	out += str3 + str(secondsSince1980) + str4 + "\n"
 
-	#Writes the URL to the file
-	URLs.write(out)
+	#Downloads the file
+	urlretrieve(out, "Images/Day" + str(dayCount) + ".png")
 
 	#Updates the day for the URL string
 	start += oneDay
 	secondsSince1980 += 86400
-
-#Closes file
-URLs.close()
+	dayCount += 1
