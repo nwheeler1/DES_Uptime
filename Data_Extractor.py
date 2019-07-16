@@ -5,12 +5,16 @@ Livingston = []
 Hanford = []
 Virgo = []
 
-
-
+numFiles = 0
 
 for file in os.listdir("Images"):
-	
-	image = Image.open("Images/" + file)
+	number = int(file[3:-4])
+	numFiles = number if number > numFiles else numFiles
+
+
+for x in range(numFiles):
+
+	image = Image.open("Images/Day" + str(x + 1) + ".png")
 
 	pix = image.load()
 
@@ -43,9 +47,9 @@ for file in os.listdir("Images"):
 			elif(135 < red < 175 and 69 < green < 109 and 162 < blue < 202):
 				isVOn = 1
 
-		LDay.append((hour, isLOn))
-		HDay.append((hour, isHOn))
-		VDay.append((hour, isVOn))
+		LDay.append(isLOn)
+		HDay.append(isHOn)
+		VDay.append(isVOn)
 
 		hour += 1
 
@@ -53,3 +57,14 @@ for file in os.listdir("Images"):
 	Hanford.append(HDay)
 	Virgo.append(VDay)
 
+outputFile = open("Uptime.txt", "w")
+
+outputFile.write("Hours Since Start of Run\t Livingston\t Hanford\t Virgo\n\n")
+
+hours = 0
+
+for day in range(len(Livingston)):
+	for hour in range(24):
+		outputFile.write(str(hours) + "\t" + str(Livingston[day][hour]) + "\t" + str(Hanford[day][hour]) + "\t" + str(Virgo[day][hour]) + "\n")
+		hours += 1
+	outputFile.write("\n")
