@@ -8,8 +8,7 @@ Virgo = []
 numFiles = 0
 
 for file in os.listdir("Images"):
-	number = int(file[3:-4])
-	numFiles = number if number > numFiles else numFiles
+	numFiles += 1
 
 
 for x in range(numFiles):
